@@ -3,6 +3,8 @@
  
  Se debera clonar el repositorio dentro de un servidor de pruebas o local y colocamdo la ruta del proyecto se verá el contenido del proyecto.
  
+ Dentro de la carpeta BD se encuentra el archivo sql de la bd
+ 
  El nombre de la Base de datos se debera de llamar: konecta
  
 Realizar una consulta que permita conocer cuál es el producto que más stock tiene.
