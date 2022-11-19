@@ -1,0 +1,121 @@
+/*
+http://www.htmldog.com/articles/suckerfish/dropdowns/example/
+*/ 
+
+
+
+.navigation ul.menu
+{
+	font-family: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	text-align:left;
+}
+.navigation  ul.menu
+{
+	border:0;
+	border-bottom:2px solid #067338 !important;
+	height:34px;
+	background-color: #E4F0E9;
+	line-height: 34px;
+
+}
+
+.navigation .nav, 
+.navigation ul.menu ul {
+	width:100%;
+ 	list-style: none;	
+	background: white;
+	font-weight: bold;
+	margin:0;
+	padding:0;
+	border:1px solid #067338;
+	z-index:1000;
+}
+ 
+.navigation .nav a {
+ 
+	display: block;
+	text-decoration: none;
+	display: block;
+	line-height: 20px;
+	margin: 0;
+	
+	color:#067338;
+}
+  
+.navigation .nav a {
+	padding: 7px 10px 7px 10px;
+}
+.navigation .nav ul li a {
+	padding: 2px 10px 2px 18px;
+}
+
+.navigation .nav ul li a.disponible {
+	background:url(../img/disponible.png) no-repeat
+}
+
+.navigation .nav ul li a.no-disponible {
+	background:url(../img/no-disponible.png) no-repeat
+}
+
+
+.navigation .nav li {
+	float: left;
+	padding: 0;
+	margin:0px;
+ 
+}
+.navigation .nav li ul {
+	position: absolute;
+	left: -999em;
+	height: auto;
+	width: 202px;
+	font-weight: normal;
+	border-width: 1px;
+	margin: 0;
+}
+
+.navigation .nav li li {
+	width: 202px
+}
+
+.navigation .nav li ul a {
+ 
+	width:190px;
+}
+
+/*Tercer nivel*/
+.navigation  ul.menu li ul ul {
+	margin:-28px 0 0 180px;
+}
+
+/**************************/
+.navigation .nav li:hover ul ul, 
+.navigation .nav li:hover ul ul ul, 
+.navigation .nav li.sfhover ul ul, 
+.navigation .nav li.sfhover ul ul ul {
+	left: -999em;
+}
+
+.navigation .nav li:hover ul, 
+.navigation .nav li li:hover ul, 
+.navigation .nav li li li:hover ul, 
+.navigation .nav li.sfhover ul, 
+.navigation .nav li li.sfhover ul, 
+.navigation .nav li li li.sfhover ul {
+	left: auto;
+}
+
+.navigation ul.menu li:hover, 
+.navigation ul.menu li.active {
+	background: #CCF0C8;
+	color: #007130;
+}
+
+/*
+li:hover > li:hover
+{
+	background-color:red !important;
+}
+*/
+/*******************************************************************/

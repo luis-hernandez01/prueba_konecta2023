@@ -1,0 +1,280 @@
+.gDiv * {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+
+    overflow: hidden;
+    color: #000;
+}
+
+
+
+.gDiv
+{
+    margin:auto;
+    border: 0px #494437 solid;
+}
+
+.hDiv, .fDiv
+{ 
+    /*
+    background: #CCF0C8 url(images/ui-bg_highlight-hard_75_CCF0C8_1x100.png) 50% 50% repeat-x;
+    color: #008000;
+    font-weight: bold;
+    */
+    /*
+    border: 1px solid #494437;
+    background: #817865 url(../custom-theme/images/ui-bg_gloss-wave_45_817865_500x100.png) 50% 50% repeat-x;
+    */
+    border: 1px solid #025a02;
+    background: #CCF0C8 url("../custom-theme/images/ui-bg_highlight-hard_75_CCF0C8_1x100.png") 50% 50% repeat-x;
+
+    font-weight: bold; 
+
+    height: 24px; 
+    line-height:24px;	
+    vertical-align:middle;		
+}
+
+.hDiv *, .fDiv *
+{
+    color:#008000;
+    font-weight: bold;
+}
+
+.hDiv
+{
+    border-bottom: 0px #494437 solid;	
+}
+
+.fDiv
+{
+    border-top: 1px #494437 solid;
+    padding-top:2px;
+    height:22px;
+}
+
+.bDiv
+{
+    /*
+    padding:5px;
+    background-color:gray;
+    border:2px solid red;
+    */
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+}
+
+
+.hTable th, .bTable td
+{
+    overflow:hidden;
+}
+
+.hTable th
+{
+
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+
+
+    padding:0 3px;
+}
+
+.bTable td
+{
+    /*
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    */
+    padding:3px;
+    border:1px solid #ccc;
+}
+
+.bTable tr td:first-child, 
+.hTable tr th:first-child
+{
+    display:none 
+}
+
+
+.bTable tr td:nth-child(2),
+.hTable tr th:nth-child(2) 
+{
+    border:0 !important;
+}
+
+
+.bTable tr  td:last-child, 
+.hTable tr  th:last-child
+{
+    border-right:0;
+}
+
+
+.bTable tr td:nth-last-child(2) 
+{
+    border-right:0; 
+}
+.bTable tr td:nth-last-child(1) 
+{
+
+    border:0 !important;
+}
+
+
+.bTable tr:last-child td
+{
+    border-bottom:2px solid #ccc !important;
+}
+
+.bTable
+{
+    /*height:100%;*/
+}
+
+.bTable, .hTable
+{
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.bTable
+{
+    /*
+    border:1px solid red !important;
+    */
+}
+
+.bTable tr
+{
+    border-top: 1px #ccc solid;
+    border-bottom: 1px #ccc solid;
+    height:20px;
+}
+
+.bTable tr div
+{
+    /*border:1px solid red;*/
+}
+
+.rowHeader div input
+{
+    border:0;
+    position:relative;
+
+    top:-2px;
+}
+
+.bTable tr.even-row
+{
+    background: rgb(200, 200, 200) transparent; 
+    background: rgba(200, 200, 200, 0.2);
+}
+
+.bTable tr.selected
+{
+
+    background: rgba(10, 10, 10, 0.2) !important;
+}
+.bTable tr.odd-row
+{
+
+}
+
+.bTable tr:hover
+{
+    background: rgba(50, 50, 50, 0.2);	
+}
+
+
+tr.recentAdd
+{
+
+
+
+    background: rgba(0, 0, 200, 0.2) !important;	
+}
+
+.fDiv span
+{
+    float:left;
+    margin-left:5px;
+    margin-right:5px;
+
+}
+.fDiv input.page
+{
+    float:left;
+    width:50px;
+    border:1px solid silver;	
+    color:black;
+}
+
+.fDiv div.btnseparator {
+    float: left;
+    height: 22px;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #fff;
+    margin: 1px;
+}
+
+.fDiv div.pButton {
+    width: 20px;
+    height: 20px;
+    display: block;
+    float: left;
+    border:1px solid transparent ;
+}
+
+.fDiv div.pButton:hover
+{
+    border:1px solid  #494437;
+    cursor:pointer;
+    width: 20px;
+    height: 20px;
+
+    background-color: rgb(255, 255, 255) transparent; 
+    background-color: rgba(255, 255, 255, 0.2);		
+}
+
+
+.fDiv .pSearch {
+    background: url(images/magnifier.png) no-repeat center;
+}
+
+.fDiv .pFirst {
+    background: url(images/first.gif) no-repeat center;
+}
+
+.fDiv .pPrev {
+    background: url(images/prev.gif) no-repeat center;
+
+}
+
+.fDiv .pNext {
+    background: url(images/next.gif) no-repeat center;
+}
+
+.fDiv .pLast {
+    background: url(images/last.gif) no-repeat center;
+}
+
+.fDiv .pReload {
+    background: url(images/load.png) no-repeat center;
+}
+
+.fDiv .pReload.loading {
+    background: url(images/load.gif) no-repeat center;
+}
+
+.pDiv
+{
+    display: none;
+    text-align:center; 
+    font-size:12pt;
+    font-weight: bold;
+    background: url(../../img/pb.gif) #fff center center no-repeat;
+    padding-top: 40px;
+}
