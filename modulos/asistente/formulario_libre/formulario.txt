@@ -1,0 +1,31 @@
+<script type="text/javascript">
+  {ACCIONES_JS}
+</script>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <form id="formulario" method="POST" class="form-horizontal" style="margin:auto;width:95%">
+
+                          <table style="width:100%">                          
+                             {OBJETOS}                          
+                          </table>
+                          
+                          <div class="cargando_libre"></div>
+                          <div class="box-footer acciones" id="libre_acciones">
+                             {BOTONES}
+                          </div>
+                          <div class="respuesta" style="margin-top:70px"><i class="textomsg"></i></div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

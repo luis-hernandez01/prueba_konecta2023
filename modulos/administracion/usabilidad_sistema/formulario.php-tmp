@@ -1,0 +1,179 @@
+
+Warning: Module 'openssl' already loaded in Unknown on line 0
+<link rel="stylesheet" type="text/css" href="js/c3/bb.css">
+    <script src="js/bb_chart/d3.js" charset="utf-8"></script>
+    <script src="js/bb_chart/billboard.min.js"></script>
+
+ <script type="text/javascript">
+
+   function cargar() {
+      cargando();
+       $.ajax({
+           url: page_root+'cargar',
+           type: 'POST',
+           dataType: 'json',
+           data: {ano: $("#ano").val()},
+       })
+       .done(function(r) {
+           $("#tabla_resumen").html(r.tabla);
+           tablesorte('tabla_usabilidad');
+           grafica1(r);
+
+       });
+
+   }
+
+   $(document).ready(function() {
+       cargar();
+   });
+
+
+
+function cargando() {
+  var htm = '<div style="margin:auto;margin-top:200px;width:200px;text-align:center"> <img src="img/cargar_anla.gif"> </div>';
+
+  $("#grafica1").html(htm);
+  $("#grafica2").html(htm);
+  $("#tabla_resumen").html(htm);
+}
+
+function grafica1(data) {
+    //$("#titulo_grafica").html(titulo);
+    chart7 = bb.generate({
+    bindto:"#grafica1",
+    data: {
+        size: {
+            height: 440,
+            width: 480
+        },
+        json: data.g1,
+        type : 'bar',
+        labels: true,
+         colors: {
+            'Vencidas': '#d62728',
+            'Vence Hoy': '#2196F3',
+            'Vence Esta Semana': '#ff7f0e'
+        }
+        //onclick: function (d, i) { ver_mas_sf(3,sector_filtro_sf,d['id']); },
+        //onover: function (d, i) { console.log("onover", d, i); },
+        //onout: function (d, i) { console.log("onout", d, i); }
+    },
+    donut: {
+        title: 'titulo'
+    },bar: {
+       padding: 3
+    },
+    grid: {
+        x: {
+            show: true
+        },
+        y: {
+            show: false
+        }
+    }
+});
+}
+
+
+ </script>
+
+
+  <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h6 class="card-title mb-3">Usuarios</h6>
+                                            <div class="d-flex d-sm-block d-lg-flex align-items-end">
+                                                <h2 class="mb-0 mr-2 font-weight-bold">
+<?php echo $db->select_one("SELECT count(*) as total FROM `admin_usuario`");?>
+</h2>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="avatar avatar-lg">
+                                                <div class="avatar-title bg-success-bright text-success rounded-circle">
+                                                    <i class="fa fa-users"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <h6 class="card-title mb-3">Roles</h6>
+                                            <div class="d-flex d-sm-block d-lg-flex align-items-end">
+                                                <h2 class="mb-0 mr-2 font-weight-bold">
+<?php echo $db->select_one("SELECT count(*) as total FROM `admin_rol`");?>
+</h2>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="avatar avatar-lg">
+                                                <div class="avatar-title bg-warning-bright text-warning rounded-circle">
+                                                    <i class="fa fa-user"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title d-md-flex align-items-start justify-content-between">
+                                        <h6 class="card-title">Detalles</h6>
+                                        <div class="btn btn-outline-light btn-sm mt-3 mt-md-0">
+                                           <select name="ano" id="ano" onchange="cargar()">
+<?php for ($i = 2020; $i <= 2021; $i++) {?>
+	                                                  <?php if ($i == date('Y')) {?>
+		                                                     <option selected="" value="<?php echo $i?>">Año: <?php echo $i?></option>
+		<?php } else {?>
+		                                                      <option value="<?php echo $i?>">Año: <?php echo $i?></option>
+		<?php }?>
+
+	<?php }?>
+                                           </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row" style="height: 300px;width: 100%">
+                                        <div class="col-md-12" id="grafica1" style="height: 300px;width: 80%">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-12" id="tabla_resumen">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
+        </div>

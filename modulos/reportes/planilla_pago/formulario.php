@@ -1,0 +1,88 @@
+<script type="text/javascript">
+    var error = false;
+    $(document).ready(function()  {
+        
+        $("#formulario").submit(function() {
+            $.ajaxSetup({async: false, dataType:'JSON'});
+            $.post(page_root + "validar", $("#formulario").values(), function(r) {
+                if (r.error == true)
+                {
+                    for (ind in r.bad_fields)
+                    {
+                        $("#" + r.bad_fields[ind]).addClass("error");
+                    }
+                    msg($(".respuesta"),r.msg,"error");
+                    error= true;
+                } else {
+                    error=false;
+                }
+            });
+            
+            if (error==true) { return false; }
+            return true;
+        });
+        
+    });
+</script>
+
+
+<div class="col-md-12 grid-margin stretch-card">
+              <div class="card position-relative">
+                <div class="card-body">
+
+    <form id="formulario" method="post"  target="_blank" 
+        action="<?php echo PAGE_ROOT . "mostrar" ?>" class="form-horizontal" style="margin:auto;width:85%">
+    <div class="box-body">
+        <table style="width:100%">
+
+            <tr> 
+                <td class="tdi">Empleado</td>
+                <td class="tdc">:</td>
+                <td class="tdd">
+                    <select id="empleados" class="select_auto" name="empleados" title="Empleado">
+                        <?php llenar_combo("SELECT p.id, CONCAT_WS(' ', p.primer_nombre,p.segundo_nombre,p.primer_apellido,p.segundo_apellido) AS nombre_completo FROM personas p ORDER BY nombre_completo",true); ?>
+                    </select>
+                </td>            
+            </tr>
+ 
+
+            <tr> 
+                <td class="tdi">Fecha inicio</td>
+                <td class="tdc">:</td>
+                <td class="tdd">
+                    <input type="date" name="fecha_inicio" id="fecha_inicio"  value="" title="Fecha inicio" placeholder="Fecha inicio" maxlength="30" required/>
+                </td>            
+            </tr>
+
+            <tr> 
+                <td class="tdi">Fecha fin</td>
+                <td class="tdc">:</td>
+                <td class="tdd">
+                    <input type="date" name="fecha_fin" id="fecha_fin"  value="" title="Fecha fin" placeholder="Fecha fin" maxlength="30" required/>
+                </td>            
+            </tr>
+
+            <tr> 
+                <td class="tdi">Formato</td>
+                <td class="tdc">:</td>
+                <td class="tdd">
+                    <select id="formato" name="formato">
+                        <option value="PDF">Documento PDF</option>
+                        <option value="XLS">Documento de Excel</option>
+                        <option value="DOC">Documento de Word</option>
+                        <option value="HTML">Visualizar en el navegador Web</option>
+                    </select>
+                </td>            
+            </tr>
+        </table>
+
+       <div class="box-footer">
+            <button type="submit" value="Mostrar" class="btn btn-success btn-icon-text" style="float:right;"><i class="ti-printer btn-icon-append"></i> Mostrar</button>
+        </div>
+    </div>
+    </form>
+
+
+                </div>
+              </div>
+            </div>

@@ -1,0 +1,22 @@
+
+Warning: PHP Startup: Unable to load dynamic library 'php_imagick.dll' (tried: C:\xampp\php\ext\php_imagick.dll (No se puede encontrar el módulo especificado.), C:\xampp\php\ext\php_php_imagick.dll.dll (No se puede encontrar el módulo especificado.)) in Unknown on line 0
+<div class='container-fluid'>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">inicio</h5>
+                            <p>
+                                FABIO
+                            </p>
+                            <div> </div>
+                            <div> </div>
+                            <div> </div>
+                            <div> </div>
+                            <div> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+

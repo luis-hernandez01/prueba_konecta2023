@@ -1,0 +1,45 @@
+<?php
+class Formulario extends Base {
+    function validar_token()
+    {
+        $hash = $_SERVER['HTTP_AUTHORIZATION'];
+       
+        if ($hash) {//No hay errores de validacion
+             $_POST=desencriptar_post($_POST,$hash);
+        }else { //Errores de validación
+            $r['error'] = true;
+            $r['msg'] = 'Error en TOKEN';
+            echo json_encode($r);
+            exit(0);
+        }
+        return true;
+    }
+    function validar() {
+        
+        $v = new Validation($_POST);
+    
+    {VALIDACION}
+    
+        $result = $v->validate();
+
+        if ($result['messages'] == "") {//No hay errores de validacion
+            return true;
+        } else { //Errores de validación
+            $r['error'] = true;
+            $r['msg'] = $result['messages'];
+            $r['bad_fields'] = $result['bad_fields'];
+            $r['errors'] = $result['errors'];
+            echo json_encode($r);
+            exit(0);
+        }
+        return true;
+    }
+
+{ACCIONES_PHP}
+}
+//$_POST = array_map("strtoupper", $_POST); //CONVERTIR TODO EN MAYUSCULA
+ 
+$accion = ACCION;
+$f = new Formulario();
+$f->$accion();
+?>

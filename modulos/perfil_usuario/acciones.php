@@ -1,0 +1,166 @@
+<?php
+class Formulario extends Base {
+    function validar() {
+        $v = new Validation($_POST);
+        $v->addRules('clave1', 'Contraseña actual', array('required' => true, 'length' => array(5, 15)));
+        $v->addRules('clave2', 'Contraseña nueva', array('required' => true, 'length' => array(5, 15)));
+        $v->addRules('clave3', 'Confirmar contraseña', array('required' => true, 'length' => array(5, 15)));
+        $result = $v->validate();
+
+        if ($result['messages'] == "") {//No hay errores de validacion
+            return true;
+        } else { //Errores de validación
+            $r['error'] = true;
+            $r['msg'] = $result['messages'];
+            $r['bad_fields'] = $result['bad_fields'];
+            $r['errors'] = $result['errors'];
+            echo json_encode($r);
+            exit(0);
+        }
+        return true;
+    }
+
+    function validar_basico() {
+        $v = new Validation($_POST);
+        $v->addRules('tipoide', 'Tipo documento', array('required' => true));
+        $v->addRules('identifica', 'Documento', array('required' => true));
+        $v->addRules('nombre1', 'Nombre', array('required' => true));
+        $v->addRules('apellido1', 'Primer apellido', array('required' => true));
+        $v->addRules('apellido2', 'Segundo apellido', array('required' => true));
+        $result = $v->validate();
+
+        if ($result['messages'] == "") {//No hay errores de validacion
+            return true;
+        } else { //Errores de validación
+            $r['error'] = true;
+            $r['msg'] = $result['messages'];
+            $r['bad_fields'] = $result['bad_fields'];
+            $r['errors'] = $result['errors'];
+            echo json_encode($r);
+            exit(0);
+        }
+        return true;
+    }
+   
+
+    function cambiar_clave() {
+       $db = $this->db;
+        $r=array();
+        $tabla="general.persona";
+        $clave_actual = $db->select_one("SELECT clave FROM  $tabla WHERE id='$_SESSION[persona_id]'");
+        if( $clave_actual !=clave($_POST['clave1']) )
+        {
+            $r['error']=true;
+            $r['msg']="La contraseña escrita no coinciden con la actual.";
+        }
+        else if ( $_POST['clave1'] == $_POST['clave2']  )
+        {
+            $r['error']=true;
+            $r['msg']="La clave antigua y la nueva no pueden ser iguales.";     
+        }
+        else if( trim($_POST['clave2'])=="" )
+        {
+            $r['error']=true;
+            $r['msg']="La nueva contraseña no puede estar en blanco.";
+        }
+        else if( $_POST['clave2'] != $_POST['clave3'] )
+        {
+            $r['error']=true;
+            $r['msg']="Debe escribir dos veces la nueva contraseña";
+        }
+        else
+        {
+            $nueva_clave=clave($_POST['clave2']);
+            $sql="UPDATE  general.persona SET clave='$nueva_clave'  WHERE id='$_SESSION[persona_id]'";
+            $db->query($sql);
+            $r['error']=false;
+            $r['msg']="La clave ha sido cambiada con éxito, se cerrara la sesión automáticamente para que vuelva a ingresar con su nueva clave";
+            session_destroy();      
+        }
+        
+        echo json_encode($r);
+    }
+     function cambiar_foto() {
+        
+        $elemento="archivo";
+        $file = $_FILES[$elemento]['name'];
+        if (!empty($file)) {
+             $d= $this->db->SubirArchivo($elemento,10000,false,'fotos_perfil/');
+               
+              if ($d['error']==true) {
+                  $result=array();
+                  $result["error"] = false;
+                  $result["msg"] = $d['mensaje']; 
+                  echo json_encode($result);
+                  exit();
+              }else{ $datos['foto'] = WEB_ROOT.$d['mensaje']; };
+
+           }  
+        $tabla="general.persona";
+
+        $this->db->update($tabla,$datos,array('id'=>$_SESSION['persona_id']));
+        $_SESSION['foto'] = $datos['foto'];
+        
+        $result=array();
+        $result["error"] = false;
+        $result["msg"] = "Foto cambiada con exito"; 
+        echo json_encode($result);
+    }
+
+     function cambiar_firma() {
+        
+        $elemento="archivo";
+        $file = $_FILES[$elemento]['name'];
+        if (!empty($file)) {
+             $d= $this->db->SubirArchivo($elemento,10000,false,'firmas/');
+               
+              if ($d['error']==true) {
+                  $result=array();
+                  $result["error"] = false;
+                  $result["msg"] = $d['mensaje']; 
+                  echo json_encode($result);
+                  exit();
+              }else{ $datos['firma'] = $d['mensaje']; };
+
+           }  
+        $tabla="general.persona";
+        $this->db->update($tabla,$datos,array('id'=>$_SESSION['persona_id']));
+        $_SESSION['firma'] = $datos['firma'];
+        
+        $result=array();
+        $result["error"] = false;
+        $result["msg"] = "Foto cambiada con exito"; 
+        echo json_encode($result);
+    }
+
+    function aceptar() {
+        $this->validar_basico();
+        $datos = $_POST;
+        
+        $tabla="general.persona";
+        $sql = "SELECT id FROM $tabla WHERE identifica='$_POST[identifica]'";
+        $d = $this->db->select_row($sql);
+        if ($d['id'] <> $_SESSION['persona_id']) {
+              $result=array();
+              $result["error"] = true;
+              $result["msg"] = "El documento a modificar ya esta registrado."; 
+              echo json_encode($result);
+              exit();
+        } 
+
+        $this->db->update($tabla,$datos,array('id'=>$_SESSION['persona_id']));
+        //PONER CODIGO AQUI
+        
+        $result=array();
+        $result["error"] = false;
+        $result["msg"] = "PONER AQUI."; 
+        echo json_encode($result);
+    }
+
+}
+//$_POST = array_map("strtoupper", $_POST); //CONVERTIR TODO EN MAYUSCULA
+ 
+$accion = ACCION;
+$f = new Formulario();
+$f->$accion();
+?>

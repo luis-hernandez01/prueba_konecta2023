@@ -1,0 +1,236 @@
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        //$("#tabla").val("persona");
+        //seleccionar_tabla();
+    });
+    
+    function todos_los_roles() {
+     if ($( "#rol_g").is( ":checked" )) { 
+             $( ".rol_hijos").prop( "checked", true );
+        }else{
+             $( ".rol_hijos").prop( "checked", false );
+        }
+  }
+
+
+    function set_ruta(argument) {
+       var tabla = $("#tabla").val();      
+        var padre = $("#menu_principal").val();
+        if (padre==="") {
+            $("#ruta").val("modulos/" + tabla);
+        }else{
+            $("#ruta").val("modulos/"+padre+'/'+tabla);
+        }
+    }
+    function seleccionar_tabla()
+    {     
+        set_ruta();
+        var tabla = $("#tabla").val();
+        $("#menu").val(tabla.replace("_","-"));
+        $("#titulo").val(tabla.toUpperCase().replace("_"," "));
+        tabla = tabla.substring(0, 1).toUpperCase() + tabla.substring(1);
+        $("#titulo_menu").val(tabla.replace("_"," "));
+        $.post(page_root + "cargarInfoFormulario", $("#f").values(), function(data) {
+            $("#f2").html(data);
+            verificar();
+            $("input[type='text']").addClass("form-control");
+            $("input[type='checkbox']").addClass("check");
+        });
+    }
+
+    function generar() {
+        $.post(page_root + "generar", $("#f").values(), function(data) {
+            try {
+                var r = jQuery.parseJSON(data);
+                alert(r.msg);
+                if (r.error == false) {
+                    //document.getElementById("f").reset();
+                    //seleccionar_tabla();
+                }
+            } catch (ex) {
+                alert(data);
+            }
+        });
+    }
+
+    function verificar() {
+        $.post(page_root + "verificar", $("#f").values(), function(data) {
+            $("#div-verificar").html(data);
+        });
+    }
+
+    function seleccionar_tipo_acceso(v) {
+        if (v == 7) {
+            $("#div-roles").show();
+        } else {
+            $("#div-roles").hide();
+        }
+
+    }
+</script>
+
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">ASISTENTE DE CREACIÓN DE FORMULARIO CRUD</h5>
+
+<form id="f" class="ui-dialog-content ui-widget-content" style="padding: 10px">
+
+        <div id="f1">
+            <table style="width: 100%"> 
+
+                <tr class='ui-widget-header'>
+                    <th colspan="3">CONFIGURACIÓN</th>
+                </tr>
+                <tr>
+                    <td class="tdi">Base de datos</td>
+                    <td class="tdc">:</td>
+                    <td class="tdd">
+                        <select id="base_datos" name="base_datos" disabled="disabled">
+                            <?php
+                            llenar_combo("SELECT SCHEMA_NAME, SCHEMA_NAME FROM information_schema.SCHEMATA", false, $cfg['db_database_name']);
+                            ?>
+                        </select>
+                    </td>  
+                </tr>
+
+
+                <tr>
+                    <td class="tdi">Tabla</td>
+                    <td class="tdc">:</td>
+                    <td class="tdd">
+                        <select id="tabla" name="tabla" onchange="seleccionar_tabla()">
+                            <?php
+                            llenar_combo("SELECT TABLE_NAME, TABLE_NAME  FROM information_schema.TABLES "
+                                    . "WHERE TABLE_SCHEMA='$cfg[db_database_name]'", true);
+                            ?>
+                        </select>
+                    </td>  
+                </tr>
+
+                <tr>
+                    <td class="tdi">Titulo Formulario</td>
+                    <td class="tdc">:</td>
+                    <td class="tdd">
+                        <input type="text" name="titulo_formulario" id="titulo" />
+                    </td>  
+                </tr>
+
+                <tr>
+                    <td class="tdi">Menú Padre</td>
+                    <td class="tdc">:</td>
+                    <td class="tdd">
+                        <select id="menu_principal" name="menu_principal" onchange="set_ruta()">
+                            <?php
+                            llenar_combo("SELECT menu, nombre FROM admin_menu WHERE ruta IS NULL ORDER BY nombre", true);
+                            ?>
+                        </select>
+                    </td>  
+                </tr>
+
+
+
+                <tr>
+                    <td class="tdi">URL</td>
+                    <td class="tdc">:</td>
+                    <td class="tdd">
+                        <input type="text" name="menu" id="menu" placeholder="Ingrese url sin espacio" onblur="verificar()"/>
+                    </td>  
+                </tr>    
+
+
+                <tr>
+                    <td class="tdi">Titulo Menú</td>
+                    <td class="tdc">:</td>
+                    <td class="tdd">
+                        <input type="text" name="titulo_menu" id="titulo_menu" placeholder="Nombre del elemento en el menú"/>
+                    </td>  
+                </tr>    
+
+
+                <tr>
+                    <td class="tdi">Tipo de Acceso</td>
+                    <td class="tdc">:</td>
+                    <td class="tdd">
+                        <select id="tipo_acceso" name="tipo_acceso" onchange="seleccionar_tipo_acceso(this.value);">
+                            <?php
+                            llenar_combo("SELECT codigo, descripcion FROM admin_acceso ", false, '7');
+                            ?>
+                        </select>
+                    </td>  
+                </tr>
+
+                <tr>
+                    <td class="tdi">Ruta</td>
+                    <td class="tdc">:</td>
+                    <td class="tdd">
+                        <input type="text" name="ruta" id="ruta" onblur="verificar()"/>
+                    </td>  
+                </tr>
+
+                 <tr>
+                    <td class="tdi">Descripción</td>
+                    <td class="tdc">:</td>
+                    <td class="tdd">
+                        <textarea name="descripcion_menu" id="descripcion_menu" style="min-height: 100px">Permite...</textarea>
+                    </td>  
+                </tr>
+
+
+            </table>
+        </div>
+
+        <div id="div-verificar">
+
+        </div>
+
+        <div id="div-roles" >
+            <table style="width: 100%"> 
+
+                <tr class='ui-widget-header'>
+                    <th colspan="2"><input type='checkbox' id='rol_g' checked='checked' onchange="todos_los_roles()" /> AGREGAR PERMISOS PARA LOS SIGUIENTES ROLES</th>
+                </tr>
+            </table>
+            <div style="overflow: hidden; min-height: 120px">
+                <table style="width: 100%"> 
+                    <?php
+                    $sql = "SELECT * FROM admin_rol ORDER BY nombre";
+                    $rs = $db->query($sql);
+                    while ($rw = $db->fetch_assoc($rs)) {
+                        echo "<tr>";
+                        echo "<td style='width:20px'>";
+                        echo "<input class='rol_hijos' type='checkbox' name='rol[{$rw[id]}]' id='rol_{$rw[id]}' checked='checked' value='S' />";
+                        echo "</td>";
+                        echo "<td>";
+                        echo "<label for='rol_{$rw[id]}'>$rw[nombre]</label>";
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                    ?>
+
+                </table>
+            </div>
+        </div>
+        <div id="f2">
+
+        </div>
+    </form>
+
+    <div class="acciones" style="margin-top:10px;width:100%;border:none;overflow:hidden">
+        <input type="button" name="accion" value="Generar" onclick="generar()" class="btn btn-block btn-success" style="float:right;width:80px"/>
+    </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+   
