@@ -1,2 +1,14 @@
 # prueba_konecta2023
- Archivi de prueba
+ Prueba Konecta
+Realizar una consulta que permita conocer cuál es el producto que más stock tiene.
+SELECT * FROM productos ORDER by stock DESC LIMIT 1
+
+
+Realizar una consulta que permita conocer cuál es el producto más vendido.
+SELECT p.nombre_producto, SUM(d.cantidad) AS mas_vendido, SUM(p.precio) AS valor_total 
+FROM productos p, detalle d 
+WHERE d.id_producto=p.id GROUP BY p.nombre_producto ORDER BY SUM(d.cantidad) desc LIMIT 1
+
+Credenciales de ingreso al sistema
+Usuario: konecta
+Contraseña: 123456789
