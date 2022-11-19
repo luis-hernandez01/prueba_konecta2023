@@ -1,5 +1,10 @@
 # prueba_konecta2023
  Prueba Konecta
+ 
+ Se debera clonar el repositorio dentro de un servidor de pruebas o local y colocamdo la ruta del proyecto se verá el contenido del proyecto.
+ 
+ El nombre de la Base de datos se debera de llamar: konecta
+ 
 Realizar una consulta que permita conocer cuál es el producto que más stock tiene.
 SELECT * FROM productos ORDER by stock DESC LIMIT 1
 
