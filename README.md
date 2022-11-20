@@ -6,6 +6,7 @@
  Dentro de la carpeta BD se encuentra el archivo sql de la bd
  
  El nombre de la Base de datos se debera de llamar: konecta
+ Para configurar la BD se ingresa al archivo de nombre configuracion,php que se encuentra en la raiz del proyecto, alli se podra realizar la configuracion hacia el servidor
  
 Realizar una consulta que permita conocer cuál es el producto que más stock tiene.
 SELECT * FROM productos ORDER by stock DESC LIMIT 1
